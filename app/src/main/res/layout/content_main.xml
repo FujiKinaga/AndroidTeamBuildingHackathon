@@ -14,6 +14,8 @@
         android:minHeight="48dp"
         android:layout_marginTop="@dimen/space_16dp"
         android:padding="@dimen/space_16dp"
+        android:hint="@string/input_sound_url"
+        android:textColorHint="@android:color/darker_gray"
         android:textColor="@android:color/black"
         android:background="@drawable/rounded_edittext_layout"
         android:layout_marginBottom="@dimen/space_32dp"/>
