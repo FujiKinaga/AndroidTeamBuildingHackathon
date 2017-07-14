@@ -135,6 +135,9 @@ public class CropArthurActivity extends AppCompatActivity implements CropImageVi
             case R.id.main_action_crop:
                 mCropImageView.getCroppedImageAsync();
                 break;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

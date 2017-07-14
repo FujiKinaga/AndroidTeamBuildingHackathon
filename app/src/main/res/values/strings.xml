@@ -21,5 +21,5 @@
    <string name="pick_cover_image">Pick Cover Image</string>
    <string name="http_protocol">http</string><string name="do_something_on_success">Do something on success</string><string
     name="do_something_else_on_failure">Do something else on failure</string><string
-    name="can_not_write_file">can not write file</string>
+    name="can_not_write_file">can not write file</string><string name="share_to_instagram">Share to Instagram</string>
 </resources>

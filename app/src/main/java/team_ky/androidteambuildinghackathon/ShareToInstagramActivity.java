@@ -2,17 +2,23 @@ package team_ky.androidteambuildinghackathon;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.FFmpegExecuteResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 
 import java.io.File;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +32,12 @@ public class ShareToInstagramActivity extends AppCompatActivity {
     @BindView(R.id.preview_video_view)
     SquareVideoView mPreviewVideoView;
 
-    @OnClick(R.id.button_upload)
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.custom_progress_bar) CustomProgressBar mCustomProgressBar;
+
+    @OnClick(R.id.share_button)
     public void onClick() {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("video/*");
@@ -51,6 +62,41 @@ public class ShareToInstagramActivity extends AppCompatActivity {
         setContentView(R.layout.activity_share_to_instagram);
         ButterKnife.bind(this);
 
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(R.string.share_to_instagram);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        createMovie();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void showProcessView() {
+        mCustomProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProcessView() {
+        mCustomProgressBar.setVisibility(View.GONE);
+    }
+
+    private int getSoundDuration() {
+        Uri uri = Uri.parse(mMovieInfo.getAudioUrl());
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(this, uri);
+        String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return Integer.parseInt(durationStr);
+    }
+
+    private void createMovie() {
         mMovieInfo = (MovieInfo) getIntent().getParcelableExtra(ARG_MOVIE_INFO);
 
         try {
@@ -72,11 +118,27 @@ public class ShareToInstagramActivity extends AppCompatActivity {
                 @Override
                 public void onFinish() {
                     Log.e(TAG, "onFinish : ");
+                    hideProcessView();
                 }
 
                 @Override
                 public void onProgress(String message) {
-                    Log.e(TAG, "onProgress : " +  message);
+                    Pattern timePattern = Pattern.compile("(?<=time=)[\\d:.]*");
+                    Scanner sc = new Scanner(message);
+
+                    String match = sc.findWithinHorizon(timePattern, 0);
+                    if (match != null) {
+                        String[] matchSplit = match.split(":");
+                        if (getSoundDuration() != 0) {
+                            float progress = (Integer.parseInt(matchSplit[0]) * 3600 +
+                                Integer.parseInt(matchSplit[1]) * 60 +
+                                Float.parseFloat(matchSplit[2])) / getSoundDuration();
+                            float showProgress = (progress * 100 * 1000);
+                            mCustomProgressBar.setProgress((int) showProgress);
+                            Log.d(TAG, "=======PROGRESS======== " + showProgress);
+                        }
+                    }
+
                 }
 
                 @Override
@@ -87,6 +149,7 @@ public class ShareToInstagramActivity extends AppCompatActivity {
                 @Override
                 public void onStart() {
                     Log.e(TAG, "onStart : ");
+                    showProcessView();
                 }
             });
         } catch (FFmpegCommandAlreadyRunningException e) {

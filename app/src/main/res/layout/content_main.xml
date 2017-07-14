@@ -42,7 +42,7 @@
 
     <Button
         android:id="@+id/share_instagram"
-        android:text="@string/share_instagram"
+        android:text="@string/share_to_instagram"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
