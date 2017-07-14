@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="team_ky.androidteambuildinghackathon.ShareToInstagramActivity"
-        android:background="@android:color/white"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:background="@android:color/white">
 
         <team_ky.androidteambuildinghackathon.SquareVideoView
             android:id="@+id/preview_video_view"
