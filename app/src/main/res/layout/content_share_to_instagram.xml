@@ -21,7 +21,7 @@
 
         <Button
             android:id="@+id/share_button"
-            android:text="@string/share_to_instagram"
+            android:text="@string/share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_16dp"
