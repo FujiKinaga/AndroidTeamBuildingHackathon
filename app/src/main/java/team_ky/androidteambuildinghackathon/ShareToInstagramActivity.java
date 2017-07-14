@@ -1,10 +1,14 @@
 package team_ky.androidteambuildinghackathon;
 
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.VideoView;
+
+import com.googlecode.mp4parser.FileDataSourceImpl;
+import com.googlecode.mp4parser.authoring.Mp4TrackImpl;
+import com.googlecode.mp4parser.authoring.tracks.h264.H264TrackImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -12,8 +16,10 @@ import butterknife.ButterKnife;
 public class ShareToInstagramActivity extends AppCompatActivity {
 
 
-    @BindView(R.id.preview_video_view) VideoView mPreviewVideoView;
-    @BindView(R.id.button_upload) Button mUploadButton;
+    @BindView(R.id.preview_video_view)
+    VideoView mPreviewVideoView;
+    @BindView(R.id.button_upload)
+    Button mUploadButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

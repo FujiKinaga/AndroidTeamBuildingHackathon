@@ -3,21 +3,30 @@
 
     <item
         is-multidex="true"
-        jar="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_f6a29736e465d4cd4c164fde90ce20d058963346/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="8c547d0ae85bb20bce0088f4a793ca42b7aa93c5">
         <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_03df437d1fa95f6d0b34ae907c5dd3719deefa50/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/fujikinaga/.gradle/caches/modules-2/files-2.1/com.googlecode.mp4parser/isoparser/1.1.22/70b5c26b52c120d2e94643717a764c4a67640fd6/isoparser-1.1.22.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="70b5c26b52c120d2e94643717a764c4a67640fd6">
+        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/isoparser-1.1.22_7bbcd2b3aa62e44ee95683663937a0d4823b947f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_f6a29736e465d4cd4c164fde90ce20d058963346/classes.dex" />
     </item>
 
 </items>
