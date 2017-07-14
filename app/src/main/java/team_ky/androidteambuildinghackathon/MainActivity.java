@@ -39,14 +39,14 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.download_sound_button)
     void onClickDownloadSound(View view) {
         String url = mInputUrl.getText().toString();
-        if (url.startsWith("http")) {
+        if (url.startsWith(getString(R.string.http_protocol))) {
             startDownloadBgmFile(url);
         } else {
             showSnackBar(getString(R.string.please_set_correct_url));
         }
     }
 
-    @OnClick(R.id.ok_button)
+    @OnClick(R.id.pick_cover_image_button)
     void onClickOk(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(R.string.lbl_download_sound);
+        getSupportActionBar().setTitle(R.string.lbl_movie_resource);
 
         mMovieInfo = new MovieInfo();
         mMovieInfo.setMovieUrl(getExternalCacheDir().getAbsolutePath());
@@ -93,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
             success = folder.mkdir();
         }
         if (success) {
-            showSnackBar("Do something on success");
+            showSnackBar(getString(R.string.do_something_on_success));
         } else {
-            showSnackBar("Do something else on failure");
+            showSnackBar(getString(R.string.do_something_else_on_failure));
         }
         if (folder.canWrite()) {
             final File file = new File(mMovieInfo.getMovieUrl());
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            showSnackBar("can not write file ");
+            showSnackBar(getString(R.string.can_not_write_file));
         }
     }
 
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             String message = "Exception when running startDownloadBgmFile() : " + e.getMessage();
             Log.e(TAG, message);
-            showSnackBar(getString(R.string.failed_download_sound));
+            showSnackBar(getString(R.string.fail_downloading_sound));
 
         }
     }
@@ -124,26 +124,24 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void downloadStarted() {
-            showSnackBar(getString(R.string.success_cropped_image));
-
+            showSnackBar(getString(R.string.start_downloading_sound));
         }
 
         @Override
         public void downloadFinished(String filePath) {
             mMovieInfo.setAudioUrl(filePath);
-            showSnackBar(getString(R.string.success_cropped_image));
-
+            showSnackBar(getString(R.string.finish_downloading_sound));
         }
 
         @Override
         public void downloadCancled() {
-            showSnackBar(getString(R.string.success_cropped_image));
+            showSnackBar(getString(R.string.cancel_downloading_sound));
 
         }
 
         @Override
         public void downloadFailed() {
-            showSnackBar(getString(R.string.success_cropped_image));
+            showSnackBar(getString(R.string.fail_downloading_sound));
         }
 
     };

@@ -4,13 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
+    android:background="@android:color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <EditText
         android:id="@+id/input_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space_16dp"/>
+        android:minHeight="48dp"
+        android:layout_marginTop="@dimen/space_16dp"
+        android:padding="@dimen/space_16dp"
+        android:textColor="@android:color/black"
+        android:background="@drawable/rounded_edittext_layout"
+        android:layout_marginBottom="@dimen/space_32dp"/>
 
     <Button
         android:id="@+id/download_sound_button"
@@ -18,13 +24,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/input_url"
+        android:textColor="@android:color/black"
+        android:textAllCaps="false"
+        android:background="@drawable/rounded_button_layout"
         android:layout_marginBottom="@dimen/space_16dp"/>
 
     <Button
-        android:id="@+id/ok_button"
-        android:text="@string/ok"
+        android:id="@+id/pick_cover_image_button"
+        android:text="@string/pick_cover_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textAllCaps="false"
+        android:background="@drawable/rounded_button_layout"
         android:layout_below="@+id/download_sound_button"
         android:layout_marginBottom="@dimen/space_16dp" />
 
@@ -33,6 +45,9 @@
         android:text="@string/share_instagram"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ok_button"/>
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:background="@drawable/rounded_button_layout"
+        android:layout_below="@+id/pick_cover_image_button"/>
 
 </RelativeLayout>
