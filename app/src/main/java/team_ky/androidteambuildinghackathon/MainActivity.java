@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import java.io.File;
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -81,6 +84,20 @@ public class MainActivity extends AppCompatActivity {
 
         mMovieInfo = new MovieInfo();
         mMovieInfo.setMovieUrl(Environment.getExternalStorageDirectory().getAbsolutePath());
+        createFile();
+    }
+
+    private void createFile() {
+        final File filePath = new File(mMovieInfo.getMoviePath());
+        filePath.mkdir();
+        if (filePath.canWrite()) {
+            final File file = new File(mMovieInfo.getMovieUrl());
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void startDownloadBgmFile(String url) {

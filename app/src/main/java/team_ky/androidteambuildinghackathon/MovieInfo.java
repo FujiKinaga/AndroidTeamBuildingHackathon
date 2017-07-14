@@ -3,8 +3,6 @@ package team_ky.androidteambuildinghackathon;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -19,15 +17,17 @@ public class MovieInfo implements Parcelable {
     private String mAudioUrl;
     private String mMovieUrl;
     private String mImageUrl;
+    private String mMoviePath;
 
     public MovieInfo() {
         mAudioUrl = null;
         mImageUrl = null;
         mMovieUrl = null;
+        mMoviePath = null;
     }
 
-    public void setImageUrl(String mImageUrl) {
-        this.mImageUrl = mImageUrl;
+    public void setImageUrl(String imageUrl) {
+        mImageUrl = imageUrl;
     }
 
     public String getImageUrl() {
@@ -35,9 +35,13 @@ public class MovieInfo implements Parcelable {
         return mImageUrl;
     }
 
-    public void setAudioUrl(String mAudioUrl) {
+    public void setAudioUrl(String audioUrl) {
 
-        this.mAudioUrl = mAudioUrl;
+        mAudioUrl = audioUrl;
+    }
+
+    public String getMoviePath() {
+        return mMoviePath;
     }
 
     public String getAudioUrl() {
@@ -49,13 +53,8 @@ public class MovieInfo implements Parcelable {
     }
 
     public void setMovieUrl(String dir) {
-        mMovieUrl = String.format("%s/%s.mp4", dir + "/nana", getDateTimeString());
-        final File file = new File(mMovieUrl);
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mMoviePath = String.format("%s/nana/", dir);
+        mMovieUrl = String.format("%s%s.mp4", mMoviePath, getDateTimeString());
     }
 
     private static String getDateTimeString() {
@@ -82,7 +81,7 @@ public class MovieInfo implements Parcelable {
 
     @Override
     public int describeContents() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -90,6 +89,7 @@ public class MovieInfo implements Parcelable {
         parcel.writeString(mAudioUrl);
         parcel.writeString(mImageUrl);
         parcel.writeString(mMovieUrl);
+        parcel.writeString(mMoviePath);
     }
 
 
@@ -97,6 +97,7 @@ public class MovieInfo implements Parcelable {
         mAudioUrl = in.readString();
         mImageUrl = in.readString();
         mMovieUrl = in.readString();
+        mMoviePath = in.readString();
     }
 
     public static final Creator<MovieInfo> CREATOR = new Creator<MovieInfo>() {
