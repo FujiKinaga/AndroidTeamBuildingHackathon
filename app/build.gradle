@@ -44,4 +44,8 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.5.1'
 
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
+
+    compile 'com.flying.xiaopo:puzzle:1.1.2'
+    compile 'com.flying.xiaopo:sticker:1.6.0'
+    compile 'com.flying.xiaopo:poiphoto:0.4.2'
 }
