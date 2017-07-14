@@ -54,6 +54,13 @@ public class ShareToInstagramActivity extends AppCompatActivity {
     private String mImageFilePath;
     private String mOutputPath;
 
+    public static Intent createIntent(Context context, String audioPath, String imagePath) {
+        Intent intent = new Intent(context, ShareToInstagramActivity.class);
+        intent.putExtra(ARG_AUDIO_FILE_PATH, audioPath);
+        intent.putExtra(ARG_IMAGE_FILE_PATH, imagePath);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
