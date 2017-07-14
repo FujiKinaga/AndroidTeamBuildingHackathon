@@ -2,5 +2,7 @@
     <string name="app_name">AndroidTeamBuildingHackathon</string>
     <string name="title_activity_download_sound">DownloadSoundActivity</string><string
     name="donwload">Donwload</string><string name="ok">OK</string><string name="lbl_download_sound">Download Sound</string><string
-    name="share_instagram">Share Instagram</string>
+    name="share_instagram">Share Instagram</string><string name="lbl_crop_image">Crop Image</string><string
+    name="save">Save</string><string
+    name="failed_to_crop_image">failed to crop image</string>
 </resources>

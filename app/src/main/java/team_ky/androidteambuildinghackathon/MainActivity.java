@@ -1,5 +1,8 @@
 package team_ky.androidteambuildinghackathon;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -16,7 +19,10 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private String mAudioPath;
+    public static final int ACTIVITY_REQUEST_CODE_ACTION_PICK = 220;
+    public static final int ACTIVITY_REQUEST_CODE_CROP_ARTHUR = 230;
+
+    private MovieInfo mMovieInfo;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -39,18 +45,25 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.ok_button)
     void onClickOk(View view) {
-        // move to xxx
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        photoPickerIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(photoPickerIntent, ACTIVITY_REQUEST_CODE_ACTION_PICK);
     }
 
     @OnClick(R.id.share_instagram)
     void onShareInstagram(View view) {
-        if (mAudioPath != null) {
-            startActivity(ShareToInstagramActivity.createIntent(this, mAudioPath, null));
+        if (mMovieInfo.getAudioUrl() != null && mMovieInfo.getImageUrl() != null) {
+            startActivity(ShareToInstagramActivity.createIntent(this, mMovieInfo.getAudioUrl(), mMovieInfo.getAudioUrl()));
         } else {
-            Snackbar.make(mRootLayout, "not finish downloading sound", Snackbar.LENGTH_SHORT).show();
+            if (mMovieInfo.getAudioUrl() == null) {
+                Snackbar.make(mRootLayout, "not finish downloading sound", Snackbar.LENGTH_SHORT).show();
+            }
+            if (mMovieInfo.getImageUrl() == null) {
+                Snackbar.make(mRootLayout, "not finish setting image", Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.lbl_download_sound);
+
+        mMovieInfo = new MovieInfo();
     }
 
     private void startDownloadBgmFile(String url) {
@@ -82,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void downloadFinished(String filePath) {
-            mAudioPath = filePath;
+            mMovieInfo.setAudioUrl(filePath);
             Snackbar.make(mRootLayout, "Finished downloading", Snackbar.LENGTH_SHORT).show();
         }
 
@@ -97,4 +112,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        switch (requestCode) {
+            case ACTIVITY_REQUEST_CODE_ACTION_PICK:
+                if (data == null || data.getData() == null) {
+                    return;
+                }
+                Intent intent = CropArthurActivity.createIntent(this, ((Uri) data.getData()).toString(), CropArthurActivity.CropCase.MOVIE_IMAGE);
+                startActivityForResult(intent, ACTIVITY_REQUEST_CODE_CROP_ARTHUR);
+                break;
+            case ACTIVITY_REQUEST_CODE_CROP_ARTHUR:
+                if (data == null || !data.hasExtra(CropArthurActivity.RET_CROPPED_IMAGE_URI)) {
+                    return;
+                }
+                mMovieInfo.setImageUrl(data.getStringExtra(CropArthurActivity.RET_CROPPED_IMAGE_URI));
+                break;
+            default:
+                break;
+        }
+
+    }
 }
