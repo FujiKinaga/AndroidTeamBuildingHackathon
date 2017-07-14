@@ -12,23 +12,23 @@ import java.net.URLConnection;
 
 public class FileDownloader {
 
-    public void downloadFile(final String url, final String cacheDirPath, final FileDownloadListener listener) {
+    public static void downloadFile(final String url, final String cacheDirPath, final FileDownloadListener listener) {
         DownloadFile downloadProcess = new DownloadFile(listener);
         downloadProcess.execute(url, cacheDirPath);
     }
 
-    public static interface FileDownloadListener {
+    public interface FileDownloadListener {
 
-        public void downloadStarted();
+        void downloadStarted();
 
-        public void downloadFinished(String filePath);
+        void downloadFinished(String filePath);
 
-        public void downloadCancled();
+        void downloadCancled();
 
-        public void downloadFailed();
+        void downloadFailed();
     }
 
-    private class DownloadFile extends AsyncTask<String, Integer, String> {
+    private static class DownloadFile extends AsyncTask<String, Integer, String> {
 
         private File mTempFile = null;
         private FileDownloadListener mListener;
