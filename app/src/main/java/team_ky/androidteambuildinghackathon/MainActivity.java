@@ -87,12 +87,7 @@ public class MainActivity extends AppCompatActivity {
         File folder = new File(mMovieInfo.getMoviePath());
         boolean success = true;
         if (!folder.exists()) {
-            success = folder.mkdir();
-        }
-        if (success) {
-            showSnackBar(getString(R.string.do_something_on_success));
-        } else {
-            showSnackBar(getString(R.string.do_something_else_on_failure));
+            folder.mkdir();
         }
         if (folder.canWrite()) {
             final File file = new File(mMovieInfo.getMovieUrl());
