@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <EditText
+        android:id="@+id/input_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_16dp"/>
+
+    <Button
+        android:id="@+id/download_sound_button"
+        android:text="@string/donwload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_url"
+        android:layout_marginBottom="@dimen/space_16dp"/>
+
+    <Button
+        android:id="@+id/ok_button"
+        android:text="@string/ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/download_sound_button"
+        android:layout_marginBottom="@dimen/space_16dp" />
+
+    <Button
+        android:id="@+id/share_instagram"
+        android:text="@string/share_instagram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ok_button"/>
+
+</RelativeLayout>
