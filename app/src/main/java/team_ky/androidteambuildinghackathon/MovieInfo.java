@@ -8,10 +8,12 @@ public class MovieInfo {
 
     private String mAudioUrl;
     private String mImageUrl;
+    private String mMoviewUrl;
 
     public MovieInfo() {
         mAudioUrl = null;
         mImageUrl = null;
+        mMoviewUrl = null;
     }
 
     public void setImageUrl(String mImageUrl) {
@@ -30,5 +32,14 @@ public class MovieInfo {
 
     public String getAudioUrl() {
         return mAudioUrl;
+    }
+
+
+    public String getMovieUrl() {
+        return mMoviewUrl;
+    }
+
+    public void setMovieUrl(String path) {
+        this.mMoviewUrl = String.format("%s/mov.mp4", path);
     }
 }
