@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="library-1.0.4">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/558bc1c32bacaee2ea6d352bbedf98892cdcad7f/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/558bc1c32bacaee2ea6d352bbedf98892cdcad7f/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/it.sephiroth.android.library.imagezoom/library/1.0.4/6d69a84ae663e9529485b12a0ec3d8b9110aa922/library-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
