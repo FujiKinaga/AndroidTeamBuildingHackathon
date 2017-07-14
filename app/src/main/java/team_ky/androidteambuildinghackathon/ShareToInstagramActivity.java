@@ -6,6 +6,8 @@ import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,11 +31,11 @@ public class ShareToInstagramActivity extends AppCompatActivity {
     private static final String TAG = ShareToInstagramActivity.class.getSimpleName();
     private static final String ARG_MOVIE_INFO = "ARG_MOVIE_INFO";
 
-    @BindView(R.id.preview_video_view)
-    SquareVideoView mPreviewVideoView;
+    @BindView(R.id.preview_video_view) SquareVideoView mPreviewVideoView;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+
+    @BindView(R.id.root_layout) CoordinatorLayout mRootLayout;
 
     @BindView(R.id.custom_progress_bar) CustomProgressBar mCustomProgressBar;
 
@@ -113,6 +115,7 @@ public class ShareToInstagramActivity extends AppCompatActivity {
                             mp.start();
                         }
                     });
+                    showSnackBar(getString(R.string.finish_creating_movie));
                 }
 
                 @Override
@@ -150,6 +153,7 @@ public class ShareToInstagramActivity extends AppCompatActivity {
                 public void onStart() {
                     Log.e(TAG, "onStart : ");
                     showProcessView();
+                    showSnackBar(getString(R.string.started_creating_movie));
                 }
             });
         } catch (FFmpegCommandAlreadyRunningException e) {
@@ -167,5 +171,9 @@ public class ShareToInstagramActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mPreviewVideoView.resume();
+    }
+
+    private void showSnackBar(String message) {
+        Snackbar.make(mRootLayout, message, Snackbar.LENGTH_LONG).show();
     }
 }
