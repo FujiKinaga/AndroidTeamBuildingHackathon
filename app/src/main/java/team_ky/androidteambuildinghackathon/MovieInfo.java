@@ -53,8 +53,8 @@ public class MovieInfo implements Parcelable {
     }
 
     public void setMovieUrl(String dir) {
-        mMoviePath = String.format("%s/nana/", dir);
-        mMovieUrl = String.format("%s%s.mp4", mMoviePath, getDateTimeString());
+        mMoviePath = String.format("%s/nana", dir);
+        mMovieUrl = String.format("%s/%s.mp4", mMoviePath, getDateTimeString());
     }
 
     private static String getDateTimeString() {

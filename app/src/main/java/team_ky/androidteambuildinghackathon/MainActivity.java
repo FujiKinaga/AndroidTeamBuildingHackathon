@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -83,26 +82,36 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.lbl_download_sound);
 
         mMovieInfo = new MovieInfo();
-        mMovieInfo.setMovieUrl(Environment.getExternalStorageDirectory().getAbsolutePath());
+        mMovieInfo.setMovieUrl(getExternalCacheDir().getAbsolutePath());
         createFile();
     }
 
     private void createFile() {
-        final File filePath = new File(mMovieInfo.getMoviePath());
-        filePath.mkdir();
-        if (filePath.canWrite()) {
+        File folder = new File(mMovieInfo.getMoviePath());
+        boolean success = true;
+        if (!folder.exists()) {
+            success = folder.mkdir();
+        }
+        if (success) {
+            showSnackBar("Do something on success");
+        } else {
+            showSnackBar("Do something else on failure");
+        }
+        if (folder.canWrite()) {
             final File file = new File(mMovieInfo.getMovieUrl());
             try {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            showSnackBar("can not write file ");
         }
     }
 
     private void startDownloadBgmFile(String url) {
         try {
-            FileDownloader.downloadFile(url, Environment.getExternalStorageDirectory().getAbsolutePath(), mFileDownloadListener);
+            FileDownloader.downloadFile(url, getCacheDir().getAbsolutePath(), mFileDownloadListener);
         } catch (Exception e) {
             String message = "Exception when running startDownloadBgmFile() : " + e.getMessage();
             Log.e(TAG, message);
