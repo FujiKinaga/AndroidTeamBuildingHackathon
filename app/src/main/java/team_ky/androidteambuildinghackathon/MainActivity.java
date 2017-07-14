@@ -1,7 +1,5 @@
 package team_ky.androidteambuildinghackathon;
 
-import static android.R.id.message;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,10 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-
-import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,21 +53,19 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.share_instagram)
     void onShareInstagram(View view) {
-        if (mMovieInfo.getAudioUrl() != null && mMovieInfo.getImageUrl() != null) {
-            convertToMovie();
-        }
-/*
-        if (mMovieInfo.getAudioUrl() != null && mMovieInfo.getImageUrl() != null) {
+        if (mMovieInfo.isAvailable()) {
             startActivity(ShareToInstagramActivity.createIntent(this, mMovieInfo));
         } else {
-            if (mMovieInfo.getAudioUrl() == null) {
+            if (!mMovieInfo.isAvailableAudio()) {
                 showSnackBar(getString(R.string.not_finish_downloading_sound));
             }
-            if (mMovieInfo.getImageUrl() == null) {
+            if (!mMovieInfo.isAvailableImage()) {
                 showSnackBar(getString(R.string.not_finish_setting_image));
             }
+            if (!mMovieInfo.isAvailableMovie()) {
+                showSnackBar(getString(R.string.not_finish_setting_movie_path));
+            }
         }
-*/
     }
 
     @Override
@@ -157,43 +149,5 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSnackBar(String message) {
         Snackbar.make(mRootLayout, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    private void convertToMovie() {
-        FFmpeg ffmpeg = FFmpeg.getInstance(this);
-        String[] cmd = {String.format("ffmpeg -y -i %s -i %s %s", mMovieInfo.getImageUrl(), mMovieInfo.getAudioUrl(), mMovieInfo.getMovieUrl())};
-        try {
-            // to execute "ffmpeg -version" command you just need to pass "-version"
-            ffmpeg.execute(cmd, new ExecuteBinaryResponseHandler() {
-
-                @Override
-                public void onStart() {
-                    Log.e(TAG, "execute onStart");
-                }
-
-                @Override
-                public void onProgress(String message) {
-                    Log.e(TAG, "execute onProgress" + message);
-                }
-
-                @Override
-                public void onFailure(String message) {
-                    Log.e(TAG, "execute onFailure" + message);
-                }
-
-                @Override
-                public void onSuccess(String message) {
-                    Log.e(TAG, "execute onSuccess" + message);
-                }
-
-                @Override
-                public void onFinish() {
-                    Log.e(TAG, "execute onFinish" + message);
-                }
-            });
-        } catch (FFmpegCommandAlreadyRunningException e) {
-            // Handle if FFmpeg is already running
-            Log.e(TAG, "FFmpegCommandAlreadyRunningException" + e.getMessage());
-        }
     }
 }

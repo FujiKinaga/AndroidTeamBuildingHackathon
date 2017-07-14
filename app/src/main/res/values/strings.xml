@@ -8,5 +8,6 @@
     name="please_set_correct_url">Please set correct url</string><string
     name="not_finish_downloading_sound">not finish downloading sound</string><string
     name="not_finish_setting_image">not finish setting image</string><string
-    name="failed_download_sound">Failed download sound</string>
+    name="failed_download_sound">Failed download sound</string><string
+    name="not_finish_setting_movie_path">not finish setting movie path</string>
 </resources>
