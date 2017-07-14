@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.share_instagram)
     void onShareInstagram(View view) {
         if (mMovieInfo.getAudioUrl() != null && mMovieInfo.getImageUrl() != null) {
-            startActivity(ShareToInstagramActivity.createIntent(this, mMovieInfo.getAudioUrl(), mMovieInfo.getAudioUrl()));
+            startActivity(ShareToInstagramActivity.createIntent(this, mMovieInfo));
         } else {
             if (mMovieInfo.getAudioUrl() == null) {
                 Snackbar.make(mRootLayout, "not finish downloading sound", Snackbar.LENGTH_SHORT).show();
