@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.FFmpegExecuteResponseHandler;
@@ -20,9 +22,6 @@ import java.util.TimeZone;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
-import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
-import cafe.adriel.androidaudioconverter.model.AudioFormat;
 
 public class ShareToInstagramActivity extends AppCompatActivity {
 
@@ -64,69 +63,47 @@ public class ShareToInstagramActivity extends AppCompatActivity {
         mAudioFilePath = getIntent().getStringExtra(ARG_AUDIO_FILE_PATH);
         mImageFilePath = getIntent().getStringExtra(ARG_IMAGE_FILE_PATH);
         mPostName = getDateTimeString();
-        mOutputPath = getCaptureFile(this, mPostName, ".mp4").toString();
+        mOutputPath = getCaptureFile(mPostName, ".mp4").toString();
 
-        File file = new File(mAudioFilePath);
-        IConvertCallback callback = new IConvertCallback() {
-            @Override
-            public void onSuccess(File convertedFile) {
-                try {
-                    String[] cmd = new String[]{"-y", "-i", mImageFilePath, "-i", convertedFile.getPath(), mOutputPath};
-                    FFmpeg ffmpeg = FFmpeg.getInstance(ShareToInstagramActivity.this);
-                    ffmpeg.execute(cmd, new FFmpegExecuteResponseHandler() {
+        try {
+            String[] cmd = new String[]{"-y", "-s", "640x640", "-i", mImageFilePath, "-i", mAudioFilePath, mOutputPath};
+            FFmpeg ffmpeg = FFmpeg.getInstance(ShareToInstagramActivity.this);
+            ffmpeg.execute(cmd, new FFmpegExecuteResponseHandler() {
+                @Override
+                public void onSuccess(String message) {
+                    Log.e("onSuccess", message);
+                    mPreviewVideoView.setVideoPath(mOutputPath);
+                    mPreviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
-                        public void onSuccess(String message) {
-                            mPreviewVideoView.setVideoPath(mOutputPath);
-                            mPreviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                @Override
-                                public void onPrepared(MediaPlayer mp) {
-                                    mp.start();
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onProgress(String message) {
-
-                        }
-
-                        @Override
-                        public void onFailure(String message) {
-
-                        }
-
-                        @Override
-                        public void onStart() {
-
-                        }
-
-                        @Override
-                        public void onFinish() {
-
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.start();
                         }
                     });
-                } catch (FFmpegCommandAlreadyRunningException e) {
-                    e.printStackTrace();
                 }
-            }
 
-            @Override
-            public void onFailure(Exception error) {
-                // Oops! Something went wrong
-            }
-        };
-        AndroidAudioConverter.with(this)
-                // Your current audio file
-                .setFile(file)
+                @Override
+                public void onProgress(String message) {
+                    Log.e("onProgress", message);
+                }
 
-                // Your desired audio format
-                .setFormat(AudioFormat.MP3)
+                @Override
+                public void onFailure(String message) {
+                    Log.e("onFailure", message);
+                }
 
-                // An callback to know when conversion is finished
-                .setCallback(callback)
+                @Override
+                public void onStart() {
 
-                // Start conversion
-                .convert();
+                }
+
+                @Override
+                public void onFinish() {
+
+                }
+            });
+        } catch (FFmpegCommandAlreadyRunningException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -147,8 +124,8 @@ public class ShareToInstagramActivity extends AppCompatActivity {
         return dateTimeFormat.format(now.getTime());
     }
 
-    private static File getCaptureFile(final Context context, String postName, final String ext) {
-        final File dir = new File(context.getCacheDir().getAbsolutePath(), "nana");
+    private static File getCaptureFile(String postName, final String ext) {
+        final File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "nana");
         dir.mkdirs();
         if (dir.canWrite()) {
             return new File(dir, postName + ext);

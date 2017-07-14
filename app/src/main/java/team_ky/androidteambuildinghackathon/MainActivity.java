@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startDownloadBgmFile(String url) {
         try {
-            FileDownloader.downloadFile(url, getCacheDir().getAbsolutePath(), mFileDownloadListener);
+            FileDownloader.downloadFile(url, Environment.getExternalStorageDirectory().getAbsolutePath(), mFileDownloadListener);
         } catch (Exception e) {
             String message = "Exception when running startDownloadBgmFile() : " + e.getMessage();
             Log.e(TAG, message);
