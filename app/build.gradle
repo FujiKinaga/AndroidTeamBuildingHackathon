@@ -48,4 +48,7 @@ dependencies {
     compile 'com.flying.xiaopo:puzzle:1.1.2'
     compile 'com.flying.xiaopo:sticker:1.6.0'
     compile 'com.flying.xiaopo:poiphoto:0.4.2'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+
+    compile('com.facebook.android:facebook-android-sdk:4.24.0')
 }

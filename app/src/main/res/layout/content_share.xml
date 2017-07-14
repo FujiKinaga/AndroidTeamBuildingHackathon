@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="team_ky.androidteambuildinghackathon.ShareActivity"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <team_ky.androidteambuildinghackathon.SquareVideoView
+            android:id="@+id/preview_video_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/share_button_instagram"
+            android:text="@string/share_to_instagram"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_16dp"
+            android:layout_marginStart="@dimen/space_16dp"
+            android:layout_marginEnd="@dimen/space_16dp"
+            android:layout_marginRight="@dimen/space_16dp"
+            android:layout_marginLeft="@dimen/space_16dp"
+            android:layout_below="@+id/preview_video_view"
+            android:textColor="@android:color/black"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button_layout" />
+
+        <Button
+            android:id="@+id/share_button_facebook"
+            android:text="@string/share_to_facebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:layout_marginStart="@dimen/space_16dp"
+            android:layout_marginEnd="@dimen/space_16dp"
+            android:layout_marginRight="@dimen/space_16dp"
+            android:layout_marginLeft="@dimen/space_16dp"
+            android:layout_below="@+id/preview_video_view"
+            android:textColor="@android:color/black"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button_layout" />
+
+        <Button
+            android:id="@+id/share_button_twitter"
+            android:text="@string/share_to_twitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8dp"
+            android:layout_marginStart="@dimen/space_16dp"
+            android:layout_marginEnd="@dimen/space_16dp"
+            android:layout_marginRight="@dimen/space_16dp"
+            android:layout_marginLeft="@dimen/space_16dp"
+            android:layout_below="@+id/preview_video_view"
+            android:textColor="@android:color/black"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button_layout" />
+
+    </LinearLayout>
+
+    <team_ky.androidteambuildinghackathon.CustomProgressBar
+        android:id="@+id/custom_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>

@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(photoPickerIntent, ACTIVITY_REQUEST_CODE_ACTION_PICK);
     }
 
-    @OnClick(R.id.share_instagram)
+    @OnClick(R.id.share)
     void onShareInstagram(View view) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToShareInstagram() {
         if (mMovieInfo.isAvailable()) {
-            startActivity(ShareToInstagramActivity.createIntent(this, mMovieInfo));
+            startActivity(ShareActivity.createIntent(this, mMovieInfo));
         } else {
             if (!mMovieInfo.isAvailableAudio()) {
                 showSnackBar(getString(R.string.not_finish_downloading_sound));

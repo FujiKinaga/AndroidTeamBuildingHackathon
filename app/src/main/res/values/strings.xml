@@ -5,7 +5,6 @@
    <string name="donwload">Donwload</string>
    <string name="ok">OK</string>
    <string name="lbl_movie_resource">Set Movie Resource</string>
-   <string name="share_instagram">Share Instagram</string>
    <string name="lbl_crop_image">Crop Image</string>
    <string name="save">Save</string>
    <string name="failed_to_crop_image">failed to crop image</string>
@@ -23,6 +22,8 @@
    <string name="do_something_else_on_failure">Do something else on failure</string>
    <string name="can_not_write_file">can not write file</string>
    <string name="share_to_instagram">Share to Instagram</string>
+   <string name="share_to_facebook">Share to Facebook</string>
+   <string name="share_to_twitter">Share to Twitter</string>
    <string name="share">Share</string>
    <string name="started_creating_movie">Started generating movie</string>
    <string name="finish_creating_movie">Finished generating movie ! Press button and share !!</string>

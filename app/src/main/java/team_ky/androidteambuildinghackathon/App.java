@@ -2,6 +2,9 @@ package team_ky.androidteambuildinghackathon;
 
 import android.app.Application;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.SyncHttpClient;
+
 import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
 import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
 
@@ -11,6 +14,12 @@ import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
 
 public class App extends Application {
     private static final String TAG = Application.class.getSimpleName();
+
+    private static final SyncHttpClient sSyncHttpClient = new SyncHttpClient();
+
+    public static SyncHttpClient getClient() {
+        return sSyncHttpClient;
+    }
 
     @Override
     public void onCreate() {

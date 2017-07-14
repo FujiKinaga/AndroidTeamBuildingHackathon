@@ -26,9 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShareToInstagramActivity extends AppCompatActivity {
+public class ShareActivity extends AppCompatActivity {
 
-    private static final String TAG = ShareToInstagramActivity.class.getSimpleName();
+    private static final String TAG = ShareActivity.class.getSimpleName();
     private static final String ARG_MOVIE_INFO = "ARG_MOVIE_INFO";
 
     @BindView(R.id.preview_video_view) SquareVideoView mPreviewVideoView;
@@ -39,21 +39,25 @@ public class ShareToInstagramActivity extends AppCompatActivity {
 
     @BindView(R.id.custom_progress_bar) CustomProgressBar mCustomProgressBar;
 
-    @OnClick(R.id.share_button)
-    public void onClick() {
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("video/*");
-        File media = new File(mMovieInfo.getMovieUrl());
-        Uri uri = Uri.fromFile(media);
-        share.putExtra(Intent.EXTRA_STREAM, uri);
-        share.setPackage("com.instagram.android");
-        startActivity(Intent.createChooser(share, "Share to"));
+    @OnClick(R.id.share_button_instagram)
+    public void onInstagram() {
+        ShareToInstagram.performShare(this, new File(mMovieInfo.getMovieUrl()));
+    }
+
+    @OnClick(R.id.share_button_facebook)
+    public void onFacebook() {
+
+    }
+
+    @OnClick(R.id.share_button_twitter)
+    public void onTwitter() {
+
     }
 
     private MovieInfo mMovieInfo;
 
     public static Intent createIntent(Context context, MovieInfo movieInfo) {
-        Intent intent = new Intent(context, ShareToInstagramActivity.class);
+        Intent intent = new Intent(context, ShareActivity.class);
         intent.putExtra(ARG_MOVIE_INFO, movieInfo);
         return intent;
     }
@@ -61,7 +65,7 @@ public class ShareToInstagramActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share_to_instagram);
+        setContentView(R.layout.activity_share);
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
@@ -103,7 +107,7 @@ public class ShareToInstagramActivity extends AppCompatActivity {
 
         try {
             String[] cmd = new String[]{"-y", "-s", "640x640", "-i", mMovieInfo.getImageUrl(), "-i", mMovieInfo.getAudioUrl(), mMovieInfo.getMovieUrl()};
-            FFmpeg ffmpeg = FFmpeg.getInstance(ShareToInstagramActivity.this);
+            FFmpeg ffmpeg = FFmpeg.getInstance(ShareActivity.this);
             ffmpeg.execute(cmd, new FFmpegExecuteResponseHandler() {
                 @Override
                 public void onSuccess(String message) {
