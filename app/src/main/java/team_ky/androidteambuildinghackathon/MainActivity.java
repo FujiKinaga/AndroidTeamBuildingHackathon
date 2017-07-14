@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void downloadStarted() {
-            showSnackBar(getString(R.string.start_downloading_sound));
+            //showSnackBar(getString(R.string.start_downloading_sound));
         }
 
         @Override
