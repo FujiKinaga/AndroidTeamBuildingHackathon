@@ -4,11 +4,12 @@ local.properties
 .idea/workspace.xml
 .idea/libraries
 .DS_Store
-/build
+build
 /captures
 .idea/gradle.xml
 .idea/modules.xml
 .idea/runConfigurations.xml
 .idea/misc.xml
+.idea/vcs.xml
 .idea/kotlinc.xml
 .idea/inspectionProfiles/
