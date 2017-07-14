@@ -20,6 +20,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -30,6 +36,7 @@ dependencies {
 
     compile 'com.googlecode.mp4parser:isoparser:1.1.22'
     compile 'org.jcodec:jcodec-android:0.1.9'
+    compile 'com.github.adrielcafe:AndroidAudioConverter:0.0.8'
 
     apt 'com.jakewharton:butterknife-compiler:8.5.1'
     compile('com.jakewharton:butterknife:8.5.1') {
