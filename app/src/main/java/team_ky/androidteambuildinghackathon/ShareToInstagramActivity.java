@@ -21,6 +21,7 @@ public class ShareToInstagramActivity extends AppCompatActivity {
         setContentView(R.layout.activity_share_to_instagram);
         ButterKnife.bind(this);
 
+
         String SOUND_URL = "android.resource://"+  getPackageName() + "/raw/sample";
         mPreviewVideoView.setVideoPath(SOUND_URL);
         mPreviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
