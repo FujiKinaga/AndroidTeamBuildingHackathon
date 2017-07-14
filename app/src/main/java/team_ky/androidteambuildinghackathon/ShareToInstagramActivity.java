@@ -7,17 +7,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.coremedia.iso.boxes.Container;
-import com.googlecode.mp4parser.FileDataSourceImpl;
-import com.googlecode.mp4parser.authoring.Movie;
-import com.googlecode.mp4parser.authoring.builder.DefaultMp4Builder;
-import com.googlecode.mp4parser.authoring.tracks.AACTrackImpl;
-import com.googlecode.mp4parser.authoring.tracks.mjpeg.OneJpegPerIframe;
+import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
+import com.github.hiteshsondhi88.libffmpeg.FFmpegExecuteResponseHandler;
+import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -50,7 +44,7 @@ public class ShareToInstagramActivity extends AppCompatActivity {
     }
 
     private String mPostName;
-    private String mVideoFilePath;
+    private String mAudioFilePath;
     private String mImageFilePath;
     private String mOutputPath;
 
@@ -67,41 +61,55 @@ public class ShareToInstagramActivity extends AppCompatActivity {
         setContentView(R.layout.activity_share_to_instagram);
         ButterKnife.bind(this);
 
-        mVideoFilePath = getIntent().getStringExtra(ARG_AUDIO_FILE_PATH);
+        mAudioFilePath = getIntent().getStringExtra(ARG_AUDIO_FILE_PATH);
         mImageFilePath = getIntent().getStringExtra(ARG_IMAGE_FILE_PATH);
         mPostName = getDateTimeString();
         mOutputPath = getCaptureFile(this, mPostName, ".mp4").toString();
 
-        File file = new File(mVideoFilePath);
+        File file = new File(mAudioFilePath);
         IConvertCallback callback = new IConvertCallback() {
             @Override
             public void onSuccess(File convertedFile) {
-                // So fast? Love it!
                 try {
-                    AACTrackImpl aac = new AACTrackImpl(new FileDataSourceImpl(convertedFile));
+                    String[] cmd = new String[]{"-y", "-i", mImageFilePath, "-i", convertedFile.getPath(), mOutputPath};
+                    FFmpeg ffmpeg = FFmpeg.getInstance(ShareToInstagramActivity.this);
+                    ffmpeg.execute(cmd, new FFmpegExecuteResponseHandler() {
+                        @Override
+                        public void onSuccess(String message) {
+                            mPreviewVideoView.setVideoPath(mOutputPath);
+                            mPreviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                @Override
+                                public void onPrepared(MediaPlayer mp) {
+                                    mp.start();
+                                }
+                            });
+                        }
 
-                    File[] files = new File[]{};
-                    files[0] = new File(mImageFilePath);
-                    OneJpegPerIframe images = new OneJpegPerIframe("image", files, aac);
-                    Movie movie = new Movie();
-                    movie.addTrack(images);
-                    movie.addTrack(aac);
-                    Container c = new DefaultMp4Builder().build(movie);
-                    FileChannel fc = new FileOutputStream(mOutputPath).getChannel();
-                    c.writeContainer(fc);
-                    fc.close();
-                } catch (IOException e) {
+                        @Override
+                        public void onProgress(String message) {
+
+                        }
+
+                        @Override
+                        public void onFailure(String message) {
+
+                        }
+
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+
+                        }
+                    });
+                } catch (FFmpegCommandAlreadyRunningException e) {
                     e.printStackTrace();
                 }
-
-                mPreviewVideoView.setVideoPath(mOutputPath);
-                mPreviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mp.start();
-                    }
-                });
             }
+
             @Override
             public void onFailure(Exception error) {
                 // Oops! Something went wrong
@@ -112,7 +120,7 @@ public class ShareToInstagramActivity extends AppCompatActivity {
                 .setFile(file)
 
                 // Your desired audio format
-                .setFormat(AudioFormat.AAC)
+                .setFormat(AudioFormat.MP3)
 
                 // An callback to know when conversion is finished
                 .setCallback(callback)
