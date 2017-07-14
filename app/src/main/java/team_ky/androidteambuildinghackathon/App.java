@@ -10,7 +10,7 @@ import cafe.adriel.androidaudioconverter.callback.ILoadCallback;
  */
 
 public class App extends Application {
-    private static final String TAG = App.class.getSimpleName();
+    private static final String TAG = Application.class.getSimpleName();
 
     @Override
     public void onCreate() {
