@@ -14,7 +14,7 @@ import java.util.TimeZone;
  * Created by okadaakihito on 2017/07/14.
  */
 
-public class MovieInfo implements Parcelable{
+public class MovieInfo implements Parcelable {
 
     private String mAudioUrl;
     private String mMovieUrl;
@@ -23,6 +23,7 @@ public class MovieInfo implements Parcelable{
     public MovieInfo() {
         mAudioUrl = null;
         mImageUrl = null;
+        mMovieUrl = null;
     }
 
     public void setImageUrl(String mImageUrl) {
@@ -56,6 +57,7 @@ public class MovieInfo implements Parcelable{
             e.printStackTrace();
         }
     }
+
     private static String getDateTimeString() {
         final GregorianCalendar now = new GregorianCalendar(TimeZone.getTimeZone("UTC"), Locale.US);
         final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US);

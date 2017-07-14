@@ -4,5 +4,10 @@
     name="donwload">Donwload</string><string name="ok">OK</string><string name="lbl_download_sound">Download Sound</string><string
     name="share_instagram">Share Instagram</string><string name="lbl_crop_image">Crop Image</string><string
     name="save">Save</string><string
-    name="failed_to_crop_image">failed to crop image</string>
+    name="failed_to_crop_image">failed to crop image</string><string name="success_cropped_image">SuSuccess cropped image</string><string
+    name="please_set_correct_url">Please set correct url</string><string
+    name="not_finish_downloading_sound">not finish downloading sound</string><string
+    name="not_finish_setting_image">not finish setting image</string><string
+    name="failed_download_sound">Failed download sound</string><string
+    name="not_finish_setting_movie_path">not finish setting movie path</string>
 </resources>

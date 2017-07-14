@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         if (url.startsWith("http")) {
             startDownloadBgmFile(url);
         } else {
-            Snackbar.make(mRootLayout, "Please set correct url", Snackbar.LENGTH_SHORT).show();
+            showSnackBar(getString(R.string.please_set_correct_url));
         }
     }
 
@@ -54,14 +54,17 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.share_instagram)
     void onShareInstagram(View view) {
-        if (mMovieInfo.getAudioUrl() != null && mMovieInfo.getImageUrl() != null) {
+        if (mMovieInfo.isAvailable()) {
             startActivity(ShareToInstagramActivity.createIntent(this, mMovieInfo));
         } else {
-            if (mMovieInfo.getAudioUrl() == null) {
-                Snackbar.make(mRootLayout, "not finish downloading sound", Snackbar.LENGTH_SHORT).show();
+            if (!mMovieInfo.isAvailableAudio()) {
+                showSnackBar(getString(R.string.not_finish_downloading_sound));
             }
-            if (mMovieInfo.getImageUrl() == null) {
-                Snackbar.make(mRootLayout, "not finish setting image", Snackbar.LENGTH_SHORT).show();
+            if (!mMovieInfo.isAvailableImage()) {
+                showSnackBar(getString(R.string.not_finish_setting_image));
+            }
+            if (!mMovieInfo.isAvailableMovie()) {
+                showSnackBar(getString(R.string.not_finish_setting_movie_path));
             }
         }
     }
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.lbl_download_sound);
 
         mMovieInfo = new MovieInfo();
+        mMovieInfo.setMovieUrl(Environment.getExternalStorageDirectory().getAbsolutePath());
     }
 
     private void startDownloadBgmFile(String url) {
@@ -85,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             String message = "Exception when running startDownloadBgmFile() : " + e.getMessage();
             Log.e(TAG, message);
-            Snackbar.make(mRootLayout, "Failed download sound", Snackbar.LENGTH_SHORT).show();
+            showSnackBar(getString(R.string.failed_download_sound));
+
         }
     }
 
@@ -93,23 +98,26 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void downloadStarted() {
-            Snackbar.make(mRootLayout, "Started downloading sound", Snackbar.LENGTH_SHORT).show();
+            showSnackBar(getString(R.string.success_cropped_image));
+
         }
 
         @Override
         public void downloadFinished(String filePath) {
             mMovieInfo.setAudioUrl(filePath);
-            Snackbar.make(mRootLayout, "Finished downloading", Snackbar.LENGTH_SHORT).show();
+            showSnackBar(getString(R.string.success_cropped_image));
+
         }
 
         @Override
         public void downloadCancled() {
-            Snackbar.make(mRootLayout, "Canceled downloading sound", Snackbar.LENGTH_SHORT).show();
+            showSnackBar(getString(R.string.success_cropped_image));
+
         }
 
         @Override
         public void downloadFailed() {
-            Snackbar.make(mRootLayout, "Failed download sound", Snackbar.LENGTH_SHORT).show();
+            showSnackBar(getString(R.string.success_cropped_image));
         }
 
     };
@@ -132,11 +140,15 @@ public class MainActivity extends AppCompatActivity {
                 if (data == null || !data.hasExtra(CropArthurActivity.RET_CROPPED_IMAGE_URI)) {
                     return;
                 }
+                showSnackBar(getString(R.string.success_cropped_image));
                 mMovieInfo.setImageUrl(data.getStringExtra(CropArthurActivity.RET_CROPPED_IMAGE_URI));
                 break;
             default:
                 break;
         }
+    }
 
+    private void showSnackBar(String message) {
+        Snackbar.make(mRootLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 }
