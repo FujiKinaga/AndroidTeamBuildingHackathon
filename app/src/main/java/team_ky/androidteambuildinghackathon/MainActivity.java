@@ -1,11 +1,15 @@
 package team_ky.androidteambuildinghackathon;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -24,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final int ACTIVITY_REQUEST_CODE_ACTION_PICK = 220;
     public static final int ACTIVITY_REQUEST_CODE_CROP_ARTHUR = 230;
+    public static final int REQUEST_STORAGE = 240;
 
     private MovieInfo mMovieInfo;
 
@@ -56,19 +61,11 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.share_instagram)
     void onShareInstagram(View view) {
-        if (mMovieInfo.isAvailable()) {
-            startActivity(ShareToInstagramActivity.createIntent(this, mMovieInfo));
-        } else {
-            if (!mMovieInfo.isAvailableAudio()) {
-                showSnackBar(getString(R.string.not_finish_downloading_sound));
-            }
-            if (!mMovieInfo.isAvailableImage()) {
-                showSnackBar(getString(R.string.not_finish_setting_image));
-            }
-            if (!mMovieInfo.isAvailableMovie()) {
-                showSnackBar(getString(R.string.not_finish_setting_movie_path));
-            }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE);
+            return;
         }
+        navigateToShareInstagram();
     }
 
     @Override
@@ -169,6 +166,35 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    navigateToShareInstagram();
+                } else {
+                    finish();
+                }
+                break;
+        }
+    }
+
+    private void navigateToShareInstagram() {
+        if (mMovieInfo.isAvailable()) {
+            startActivity(ShareToInstagramActivity.createIntent(this, mMovieInfo));
+        } else {
+            if (!mMovieInfo.isAvailableAudio()) {
+                showSnackBar(getString(R.string.not_finish_downloading_sound));
+            }
+            if (!mMovieInfo.isAvailableImage()) {
+                showSnackBar(getString(R.string.not_finish_setting_image));
+            }
+            if (!mMovieInfo.isAvailableMovie()) {
+                showSnackBar(getString(R.string.not_finish_setting_movie_path));
+            }
         }
     }
 
