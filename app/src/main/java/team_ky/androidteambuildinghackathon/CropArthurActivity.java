@@ -37,7 +37,7 @@ public class CropArthurActivity extends AppCompatActivity implements CropImageVi
     public static final String RET_CROPPED_IMAGE_URI = "cropped_image_uri";
 
     public enum CropCase {
-        MOVIE_IMAGE("movie_cover.jpg");
+        MOVIE_IMAGE("movie_cover.png");
 
         private String mFileName;
 
