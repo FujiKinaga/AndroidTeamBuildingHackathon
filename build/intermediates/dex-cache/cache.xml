@@ -3,87 +3,6 @@
 
     <item
         is-multidex="true"
-        jar="/Users/fujikinaga/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.24/3f6b4bd4f8dbe8d4bea06d107a3826469b85c3e9/slf4j-api-1.7.24.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="3f6b4bd4f8dbe8d4bea06d107a3826469b85c3e9">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/slf4j-api-1.7.24_b27bf0e3eccb7c4e06cb6705de85dad8094a3b9e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/fujikinaga/.gradle/caches/modules-2/files-2.1/org.jcodec/jcodec/0.1.9/d874724f18c8ebc54931d1ab9b4603b7c6a7cf93/jcodec-0.1.9.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d874724f18c8ebc54931d1ab9b4603b7c6a7cf93">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/jcodec-0.1.9_85cc16ee2669ccf33fd7384db005ea2ac0cc9b2b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/fujikinaga/.android/build-cache/7109b53f978fc5a2d25130da8846fd59b6809114/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_a21aa3af4ac695e2fae7bb3c41c6f2a60aa16211/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="a9aa62d5632af778b8f2f3b62529871024119347">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_03df437d1fa95f6d0b34ae907c5dd3719deefa50/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/fujikinaga/.android/build-cache/5ca0abd71d8500b74729fd95bf805c36c7fe018a/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="57e0ef2a88702e623130d33d2590fb7b78521c83">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_79aa9698341db6a72c39c780f3157a5a9e0873cf/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/fujikinaga/.android/build-cache/558bc1c32bacaee2ea6d352bbedf98892cdcad7f/output/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="808deed0b600a65b805b642c2234feb6992dec88">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_49dd9a070461e2fc1162325d157ae3083b8181a0/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/fujikinaga/.gradle/caches/modules-2/files-2.1/org.mp4parser/isoparser/1.9.29/24cbb3e76e5d82f1f763f9f43bbb8d395ee39a95/isoparser-1.9.29.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="24cbb3e76e5d82f1f763f9f43bbb8d395ee39a95">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/isoparser-1.9.29_225f4e1790441e8e4050b883eda19aa00fe21e88/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/fujikinaga/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/constraint-layout-solver-1.0.2_e50de0b13c3e1dbd1dd5628de657bea2bb893f65/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/fujikinaga/.gradle/caches/modules-2/files-2.1/org.jcodec/jcodec-android/0.1.9/390f4672af45d022b05015e21388e6836178f0bb/jcodec-android-0.1.9.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="390f4672af45d022b05015e21388e6836178f0bb">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/jcodec-android-0.1.9_589d2065a3eb844fca1acfaf9e9c1557afd5e6dd/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
@@ -93,12 +12,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/fujikinaga/.android/build-cache/90b5bce8207ac636e1e4a12f1970b8c801320224/output/jars/classes.jar"
+        jar="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
-        sha1="524dbb5c53295c006c7aa1a209aae0407d6ebc53">
-        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_ff2fbc6dd6091da1fff36060bb119d68d7a25fda/classes.dex" />
+        sha1="8c547d0ae85bb20bce0088f4a793ca42b7aa93c5">
+        <dex dex="/Users/fujikinaga/workspace/AndroidTeamBuildingHackathon/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_03df437d1fa95f6d0b34ae907c5dd3719deefa50/classes.dex" />
     </item>
 
 </items>
