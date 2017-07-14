@@ -17,9 +17,6 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cafe.adriel.androidaudioconverter.AndroidAudioConverter;
-import cafe.adriel.androidaudioconverter.callback.IConvertCallback;
-import cafe.adriel.androidaudioconverter.model.AudioFormat;
 
 public class ShareToInstagramActivity extends AppCompatActivity {
 
@@ -56,68 +53,45 @@ public class ShareToInstagramActivity extends AppCompatActivity {
 
         mMovieInfo = (MovieInfo) getIntent().getParcelableExtra(ARG_MOVIE_INFO);
 
-        File file = new File(mMovieInfo.getAudioUrl());
-        IConvertCallback callback = new IConvertCallback() {
-            @Override
-            public void onSuccess(File convertedFile) {
-                try {
-                    String[] cmd = new String[]{"-y", "-i", mMovieInfo.getImageUrl(), "-i", convertedFile.getPath(), mMovieInfo.getMovieUrl()};
-                    FFmpeg ffmpeg = FFmpeg.getInstance(ShareToInstagramActivity.this);
-                    ffmpeg.execute(cmd, new FFmpegExecuteResponseHandler() {
+        try {
+            String[] cmd = new String[]{"-y", "-s", "640x640", "-i", mMovieInfo.getImageUrl(), "-i", mMovieInfo.getAudioUrl(), mMovieInfo.getMovieUrl()};
+            FFmpeg ffmpeg = FFmpeg.getInstance(ShareToInstagramActivity.this);
+            ffmpeg.execute(cmd, new FFmpegExecuteResponseHandler() {
+                @Override
+                public void onSuccess(String message) {
+                    Log.e("onSuccess", message);
+                    mPreviewVideoView.setVideoPath(mMovieInfo.getMovieUrl());
+                    mPreviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
-                        public void onSuccess(String message) {
-                            mPreviewVideoView.setVideoPath(mMovieInfo.getMovieUrl());
-                            mPreviewVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                @Override
-                                public void onPrepared(MediaPlayer mp) {
-                                    mp.start();
-                                }
-                            });
-                            Log.e(TAG, "onSuccess : " + message);
-                        }
-
-                        @Override
-                        public void onProgress(String message) {
-                            Log.e(TAG, "onProgress : " + message);
-                        }
-
-                        @Override
-                        public void onFailure(String message) {
-                            Log.e(TAG, "onFailure : " + message);
-                        }
-
-                        @Override
-                        public void onStart() {
-                            Log.e(TAG, "onStart : ");
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            Log.e(TAG, "onFinish : ");
+                        public void onPrepared(MediaPlayer mp) {
+                            mp.start();
                         }
                     });
-                } catch (FFmpegCommandAlreadyRunningException e) {
-                    e.printStackTrace();
                 }
-            }
 
-            @Override
-            public void onFailure(Exception error) {
-                // Oops! Something went wrong
-            }
-        };
-        AndroidAudioConverter.with(this)
-                // Your current audio file
-                .setFile(file)
+                @Override
+                public void onFinish() {
+                    Log.e(TAG, "onFinish : ");
+                }
 
-                // Your desired audio format
-                .setFormat(AudioFormat.MP3)
+                @Override
+                public void onProgress(String message) {
+                    Log.e(TAG, "onProgress : " +  message);
+                }
 
-                // An callback to know when conversion is finished
-                .setCallback(callback)
+                @Override
+                public void onFailure(String message) {
+                    Log.e(TAG, "onFailure : " + message);
+                }
 
-                // Start conversion
-                .convert();
+                @Override
+                public void onStart() {
+                    Log.e(TAG, "onStart : ");
+                }
+            });
+        } catch (FFmpegCommandAlreadyRunningException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

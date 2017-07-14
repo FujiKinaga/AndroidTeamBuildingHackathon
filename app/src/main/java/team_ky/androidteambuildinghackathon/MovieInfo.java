@@ -3,6 +3,7 @@ package team_ky.androidteambuildinghackathon;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -46,10 +47,14 @@ public class MovieInfo implements Parcelable {
         return mMoviewUrl;
     }
 
-    public void setMovieUrl(String path) {
-        this.mMoviewUrl = String.format("%s/%s", path, getDateTimeString());
+    public void setMovieUrl(String dir) {
+        final File file = new File(dir, "nana");
+        file.mkdirs();
+        if (file.canWrite()) {
+            mMoviewUrl = String.format("%s/%s.mp4", dir, getDateTimeString());
+            new File(mMoviewUrl);
+        }
     }
-
     private static String getDateTimeString() {
         final GregorianCalendar now = new GregorianCalendar(TimeZone.getTimeZone("UTC"), Locale.US);
         final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US);
