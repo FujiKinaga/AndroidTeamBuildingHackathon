@@ -16,9 +16,10 @@ public class App extends Application {
     private static final String TAG = Application.class.getSimpleName();
 
     private static final SyncHttpClient sSyncHttpClient = new SyncHttpClient();
+    private static final AsyncHttpClient sAsyncHttpClient = new AsyncHttpClient();
 
-    public static SyncHttpClient getClient() {
-        return sSyncHttpClient;
+    public static AsyncHttpClient getClient() {
+        return sAsyncHttpClient;
     }
 
     @Override

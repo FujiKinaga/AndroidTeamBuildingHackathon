@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
@@ -83,9 +84,9 @@ public class ShareToTwitter {
 
     private static final String TWEET_TWITTER = "https://api.twitter.com/1.1/statuses/update.json";
 
-    private static final String TWITTER_KEY = "kurJalaArRFtwhnZCoMxB2kKU";
+    private static final String TWITTER_KEY = "xxYfyEUnFF5MFNluVS682A";
 
-    private static final String TWITTER_SECRET = "oOCDmf29DyJyfxOPAaj8tSASzSPAHNepvbxcfVLkA9dJw7inYa";
+    private static final String TWITTER_SECRET = "O01j5maUGzieOtGmss7gZrflT1VuQ9P4FbNwbPXWw";
 
     private static final PercentEscaper percentEncoder = new PercentEscaper(
             "-._~", false);
@@ -277,11 +278,13 @@ public class ShareToTwitter {
         httpParameters.put("command", "INIT", true);
         httpParameters.put("media_type", "video/mp4", true);
         httpParameters.put("total_bytes", String.valueOf(file.length()), true);
+        httpParameters.put("media_category", "tweet_video", true);
 
         RequestParams requestParams = new RequestParams();
         requestParams.put("command", "INIT");
         requestParams.put("media_type", "video/mp4");
         requestParams.put("total_bytes", String.valueOf(file.length()));
+        requestParams.put("media_category", "tweet_video");
 
         httpParameters.put(OAUTH_SIGNATURE, createOAuthSignature("POST", POST_TWITTER, tokenSecret, httpParameters), true);
 
@@ -310,7 +313,7 @@ public class ShareToTwitter {
         HttpParameters httpParameters = getParam(token);
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put("media", new ByteArrayInputStream(list.get(segment_index)), "gocci.mp4", "application/octet-stream", true);
+        requestParams.put("media", new ByteArrayInputStream(list.get(segment_index)), "rb", "application/octet-stream");
         requestParams.put("command", "APPEND");
         requestParams.put("media_id", media_id);
         requestParams.put("segment_index", String.valueOf(segment_index));
@@ -359,7 +362,70 @@ public class ShareToTwitter {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                performVideoTweet(context, media_id, token, tokenSecret, message);
+                try {
+                    JSONObject processing_info = response.getJSONObject("processing_info");
+                    String state = processing_info.getString("state");
+                    if (state.equals("succeeded")) {
+                        performVideoTweet(context, media_id, token, tokenSecret, message);
+                    } else if (state.equals("succeeded")) {
+                        Log.e("ログ", "失敗");
+                    } else {
+                        int check_after_secs = processing_info.getInt("check_after_secs");
+                        try {
+                            Thread.sleep(check_after_secs * 1000);
+                            performCheckStatus(context, media_id, token, tokenSecret, message);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private static void performCheckStatus(final Context context, final String media_id, final String token, final String tokenSecret, final String message) {
+        HttpParameters httpParameters = getParam(token);
+        httpParameters.put("command", "STATUS", true);
+        httpParameters.put("media_id", media_id, true);
+
+        RequestParams requestParams = new RequestParams();
+        requestParams.put("command", "STATUS");
+        requestParams.put("media_id", media_id);
+
+        httpParameters.put(OAUTH_SIGNATURE, createOAuthSignature("GET", POST_TWITTER, tokenSecret, httpParameters), true);
+
+        App.getClient().removeHeader(HTTP_AUTHORIZATION_HEADER);
+        App.getClient().setTimeout(100000);
+        App.getClient().addHeader(HTTP_AUTHORIZATION_HEADER, createOAuthSignatureHeaderEntry(httpParameters));
+        App.getClient().get(context, POST_TWITTER, requestParams, new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.e("ログ", "失敗");
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONObject processing_info = response.getJSONObject("processing_info");
+                    String state = processing_info.getString("state");
+                    if (state.equals("succeeded")) {
+                        performVideoTweet(context, media_id, token, tokenSecret, message);
+                    } else if (state.equals("succeeded")) {
+                        Log.e("ログ", "失敗");
+                    } else {
+                        int check_after_secs = processing_info.getInt("check_after_secs");
+                        try {
+                            Thread.sleep(check_after_secs * 1000);
+                            performCheckStatus(context, media_id, token, tokenSecret, message);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

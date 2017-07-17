@@ -46,12 +46,12 @@ public class ShareActivity extends AppCompatActivity {
 
     @OnClick(R.id.share_button_facebook)
     public void onFacebook() {
-
+        ShareToFacebook.performShare(this, "", new File(mMovieInfo.getMovieUrl()), "from nana");
     }
 
     @OnClick(R.id.share_button_twitter)
     public void onTwitter() {
-
+        ShareToTwitter.performShare(this, "806367043893207040-OHVlnlEfFc03OYxBhy0ZdCug92UJ6ZG", "T8gkcbvdZMYeNZcxHjc5bpMctWhPa864QtleTIbM2gABz", new File(mMovieInfo.getMovieUrl()), "from nana");
     }
 
     private MovieInfo mMovieInfo;
