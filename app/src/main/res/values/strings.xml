@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-   <string name="app_name">Nanagram</string>
-   <string name="title_activity_download_sound">DownloadSoundActivity</string>
-   <string name="donwload">Donwload</string>
-   <string name="ok">OK</string>
-   <string name="lbl_movie_resource">Set Movie Resource</string>
-   <string name="lbl_crop_image">Crop Image</string>
-   <string name="save">Save</string>
-   <string name="failed_to_crop_image">failed to crop image</string>
-   <string name="start_downloading_sound">Started downloading sound</string>
-   <string name="finish_downloading_sound">Finished downloading sound</string>
-   <string name="cancel_downloading_sound">Canceled downloading sound</string>
-   <string name="fail_downloading_sound">Failed downloading sound</string>
-   <string name="success_cropped_image">Success cropped image</string>
-   <string name="please_set_correct_url">Please set correct url</string>
-   <string name="not_finish_downloading_sound">Not finish downloading sound</string>
-   <string name="not_finish_setting_image">Not finish setting image</string>
-   <string name="not_finish_setting_movie_path">not finish setting movie path</string>
-   <string name="pick_cover_image">Pick Cover Image</string>
-   <string name="http_protocol">http</string><string name="do_something_on_success">Do something on success</string>
-   <string name="do_something_else_on_failure">Do something else on failure</string>
-   <string name="can_not_write_file">can not write file</string>
-   <string name="share_to_instagram">Share to Instagram</string>
-   <string name="share_to_facebook">Share to Facebook</string>
-   <string name="share_to_twitter">Share to Twitter</string>
-   <string name="share">Share</string>
-   <string name="started_creating_movie">Started generating movie</string>
-   <string name="finish_creating_movie">Finished generating movie ! Press button and share !!</string>
-   <string name="input_sound_url">Input Sound Url</string>
+    <string name="app_name">Nanagram</string>
+    <string name="title_activity_download_sound">DownloadSoundActivity</string>
+    <string name="donwload">Donwload</string>
+    <string name="ok">OK</string>
+    <string name="lbl_movie_resource">Set Movie Resource</string>
+    <string name="lbl_crop_image">Crop Image</string>
+    <string name="save">Save</string>
+    <string name="failed_to_crop_image">failed to crop image</string>
+    <string name="start_downloading_sound">Started downloading sound</string>
+    <string name="finish_downloading_sound">Finished downloading sound</string>
+    <string name="cancel_downloading_sound">Canceled downloading sound</string>
+    <string name="fail_downloading_sound">Failed downloading sound</string>
+    <string name="success_cropped_image">Success cropped image</string>
+    <string name="please_set_correct_url">Please set correct url</string>
+    <string name="not_finish_downloading_sound">Not finish downloading sound</string>
+    <string name="not_finish_setting_image">Not finish setting image</string>
+    <string name="not_finish_setting_movie_path">not finish setting movie path</string>
+    <string name="pick_cover_image">Pick Cover Image</string>
+    <string name="http_protocol">http</string>
+    <string name="do_something_on_success">Do something on success</string>
+    <string name="do_something_else_on_failure">Do something else on failure</string>
+    <string name="can_not_write_file">can not write file</string>
+    <string name="share_to_instagram">Share to Instagram</string>
+    <string name="share_to_facebook">Share to Facebook</string>
+    <string name="share_to_twitter">Share to Twitter</string>
+    <string name="share">Share</string>
+    <string name="started_creating_movie">Started generating movie</string>
+    <string name="finish_creating_movie">Finished generating movie ! Press button and share !!</string>
+    <string name="input_sound_url">Input Sound Url</string>
+    <string name="fb_app_id" translatable="false">475080299175279</string>
 </resources>

@@ -1,5 +1,6 @@
 package team_ky.androidteambuildinghackathon;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.facebook.AccessToken;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.FFmpegExecuteResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
@@ -29,6 +31,8 @@ import butterknife.OnClick;
 public class ShareActivity extends AppCompatActivity {
 
     private static final String TAG = ShareActivity.class.getSimpleName();
+    private static final int ACTIVITY_REQUEST_CODE_TWITTER_LOGIN = 130;
+    private static final int ACTIVITY_REQUEST_CODE_FACEBOOK_LOGIN = 140;
     private static final String ARG_MOVIE_INFO = "ARG_MOVIE_INFO";
 
     @BindView(R.id.preview_video_view) SquareVideoView mPreviewVideoView;
@@ -46,12 +50,12 @@ public class ShareActivity extends AppCompatActivity {
 
     @OnClick(R.id.share_button_facebook)
     public void onFacebook() {
-        ShareToFacebook.performShare(this, "", new File(mMovieInfo.getMovieUrl()), "from nana");
+        startActivityForResult(FacebookLoginActivity.createIntent(this), ACTIVITY_REQUEST_CODE_FACEBOOK_LOGIN);
     }
 
     @OnClick(R.id.share_button_twitter)
     public void onTwitter() {
-        ShareToTwitter.performShare(this, "806367043893207040-OHVlnlEfFc03OYxBhy0ZdCug92UJ6ZG", "T8gkcbvdZMYeNZcxHjc5bpMctWhPa864QtleTIbM2gABz", new File(mMovieInfo.getMovieUrl()), "from nana");
+        startActivityForResult(TwitterLoginActivity.createIntent(this), ACTIVITY_REQUEST_CODE_TWITTER_LOGIN);
     }
 
     private MovieInfo mMovieInfo;
@@ -175,6 +179,37 @@ public class ShareActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mPreviewVideoView.resume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((resultCode == Activity.RESULT_OK && requestCode == ACTIVITY_REQUEST_CODE_TWITTER_LOGIN)) {
+            TwitterLoginActivity.ResultType currentResultType = (TwitterLoginActivity.ResultType) data.getSerializableExtra(TwitterLoginActivity.RET_RESULT_TYPE);
+            switch (currentResultType) {
+                case Success:
+                    String token= data.getStringExtra(TwitterLoginActivity.RET_TOKEN);
+                    String secret = data.getStringExtra(TwitterLoginActivity.RET_SECRET);
+                    ShareToTwitter.performAuthentication(this, token, secret, new File(mMovieInfo.getMovieUrl()), "from nana");
+                    break;
+                case LoginError:
+
+                    break;
+            }
+        }
+
+        if ((resultCode == Activity.RESULT_OK && requestCode == ACTIVITY_REQUEST_CODE_FACEBOOK_LOGIN)) {
+            final FacebookLoginActivity.ResultType currentResultType = (FacebookLoginActivity.ResultType) data.getSerializableExtra(FacebookLoginActivity.RET_RESULT_TYPE);
+            switch (currentResultType) {
+                case Success:
+                    String authToken = data.getStringExtra(FacebookLoginActivity.RET_AUTH_TOKEN);
+                    ShareToFacebook.performShare(this, authToken, new File(mMovieInfo.getMovieUrl()), "from nana");
+                    break;
+                case LoginError:
+
+                    break;
+            }
+        }
     }
 
     private void showSnackBar(String message) {

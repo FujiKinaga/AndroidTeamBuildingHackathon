@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -263,7 +264,7 @@ public class ShareToTwitter {
 
         b = baos.toByteArray();
 
-        int GOMEGA = 1024 * 1024 * 5;
+        int GOMEGA = 1024 * 1024 * 4;
         int begin = 0;
         for (int i = 0; i < (b.length / GOMEGA); i++) {
             begin = (i + 1) * GOMEGA;
@@ -273,7 +274,7 @@ public class ShareToTwitter {
         return array;
     }
 
-    public static void performShare(final Context context, final String token, final String tokenSecret, final File file, final String message) {
+    private static void performShare(final Context context, final String token, final String tokenSecret, final File file, final String message) {
         HttpParameters httpParameters = getParam(token);
         httpParameters.put("command", "INIT", true);
         httpParameters.put("media_type", "video/mp4", true);
@@ -313,7 +314,7 @@ public class ShareToTwitter {
         HttpParameters httpParameters = getParam(token);
 
         RequestParams requestParams = new RequestParams();
-        requestParams.put("media", new ByteArrayInputStream(list.get(segment_index)), "rb", "application/octet-stream");
+        requestParams.put("media", new ByteArrayInputStream(list.get(segment_index)), "nana.mp4", "application/octet-stream");
         requestParams.put("command", "APPEND");
         requestParams.put("media_id", media_id);
         requestParams.put("segment_index", String.valueOf(segment_index));
@@ -326,7 +327,7 @@ public class ShareToTwitter {
         App.getClient().post(context, POST_TWITTER, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e("ログ", "失敗");
+                Log.e("ログ", "失敗" + errorResponse);
             }
 
             @Override
@@ -367,7 +368,7 @@ public class ShareToTwitter {
                     String state = processing_info.getString("state");
                     if (state.equals("succeeded")) {
                         performVideoTweet(context, media_id, token, tokenSecret, message);
-                    } else if (state.equals("succeeded")) {
+                    } else if (state.equals("failed")) {
                         Log.e("ログ", "失敗");
                     } else {
                         int check_after_secs = processing_info.getInt("check_after_secs");
@@ -402,7 +403,7 @@ public class ShareToTwitter {
         App.getClient().get(context, POST_TWITTER, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e("ログ", "失敗");
+                Log.e("ログ", "失敗" + errorResponse);
             }
 
             @Override
@@ -412,8 +413,8 @@ public class ShareToTwitter {
                     String state = processing_info.getString("state");
                     if (state.equals("succeeded")) {
                         performVideoTweet(context, media_id, token, tokenSecret, message);
-                    } else if (state.equals("succeeded")) {
-                        Log.e("ログ", "失敗");
+                    } else if (state.equals("failed")) {
+                        Log.e("ログ", "失敗" + response);
                     } else {
                         int check_after_secs = processing_info.getInt("check_after_secs");
                         try {
@@ -447,17 +448,17 @@ public class ShareToTwitter {
         App.getClient().post(context, TWEET_TWITTER, requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e("ログ", "失敗");
+                Log.e("ログ", "失敗" + errorResponse);
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.e("ログ", "成功");
+                Log.e("ログ", "成功" + response);
             }
         });
     }
 
-    private static void performAuthentication(final Context context, final String token, final String tokenSecret) {
+    static void performAuthentication(final Context context, final String token, final String tokenSecret, final File file, final String message) {
         HttpParameters httpParameters = getParam(token);
         httpParameters.put("skip_status", "true", true);
         httpParameters.put("include_entities", "false", true);
@@ -480,7 +481,7 @@ public class ShareToTwitter {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
+                performShare(context, token, tokenSecret, file, message);
             }
         });
     }

@@ -13,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/fb_app_id" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,5 +25,22 @@
         </activity>
         <activity android:name=".ShareActivity"/>
         <activity android:name=".CropArthurActivity"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3aa49b6ff2e26c32bb49a18156609e81bb1ccd6b" />
+        <activity
+            android:name=".TwitterLoginActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FacebookLoginActivity"
+            android:label=""
+            android:theme="@style/AppTheme.FacebookTheme"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>
